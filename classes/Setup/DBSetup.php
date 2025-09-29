@@ -106,4 +106,20 @@ class DBSetup implements \ilDatabaseUpdateSteps
             $this->db->addPrimaryKey('ui_uihk_seb_conf', ['name']);
         }
     }
+
+    public function step_2(): void
+    {
+        if (!$this->db->tableColumnExists('ui_uihk_seb_keys', 'force_seb_usage')) {
+            $this->db->addTableColumn(
+                'ui_uihk_seb_keys',
+                'force_seb_usage',
+                [
+                    'type' => \ilDBConstants::T_INTEGER,
+                    'length' => 1,
+                    'notnull' => true,
+                    'default' => 0
+                ]
+            );
+        }
+    }
 }

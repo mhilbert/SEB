@@ -14,6 +14,11 @@ installation with any other browser, either through sitewide keys or object
 specific keys. Object specific keys only allow access to the ILIAS object (test)
 they are defined in. **Be aware that sitewide keys might pose a risk for your exam if using them in BYOD exams!**
 * Object-specific keys can be deactivated (for backward compatibility).
+* Object-specific keys can be forced. If this option is selected users that are
+not assinged to any roles that are limited in the global configuration and do not
+have 'write' permissions on the corresponding test are also forced to use a
+correctly configured Safe Exam Browser and the test will be shown to them in the
+SEB Kiosk Skin.
 * It adds a menu to change the language without having to access the user
 settings to the interface.
 * It adds a tab for administrators to the test object (could be expanded to

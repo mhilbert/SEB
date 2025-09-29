@@ -21,10 +21,14 @@ exam_id#:#Exam-ID
 forbidden_header#:#Access denied!
 forbidden_login#:#Login to ILIAS
 forbidden_message#:#You are not authorized to access the system with this browser.<br />Please contact your system administrator.
+force_seb_usage#:#Force Access Through SEB
+force_seb_usage_info#:#Access to this test for accounts lacking the right to change the settings of this test is only possible using a Save Exam Browser configured with the object-specific keys set above. The kiosk skin will be used.
 header_bg_color#:#Header Background Color
 header_bg_color_info#:#You have to enter a correct color code (any format valid in CSS is accepted).
 header_color#:#Header Content Color
 header_color_info#:#You have to enter a correct color code (any format valid in CSS is accepted).
+ilias_root_uri#:#ILIAS Root-URI
+ilias_root_uri_info#:#This URI can be adapted if the system's protocol/host/port is different than that of the request URL sent by SEB (e.g. in certain proxy configurations). If the value is deleted, it will be reset to the URI of the ILIAS system.
 key_macos#:#Keys for MacOS
 key_macos_info#:#You can find the key in the SEB Config Tool in the Tab 'Exams'. Be aware: The key does only work with the Version of SEB with which it was generated! Multiple keys can be entered separated by commas.
 key_windows#:#Keys for Windows
@@ -52,8 +56,6 @@ show_pax_pic#:#Show picture of Participants
 show_pax_pic_info#:#If enabled a image of the participant is shown in the right corner of the screen. For this to work images need to be available on ILIAS.
 show_pax_username#:#Show username of Participants
 show_pax_username_info#:#If enabled the username of the participant is shown in the header
-ilias_root_uri#:#ILIAS Root-URI
-ilias_root_uri_info#:#This URI can be adapted if the system's protocol/host/port is different than that of the request URL sent by SEB (e.g. in certain proxy configurations). If the value is deleted, it will be reset to the URI of the ILIAS system.
 title_delete_sessions_table#:#The following sessions will be deleted and the corresponding users will be logged out
 title_sessions_table#:#Current Sessions for Test-Participants
 title_settings_form#:#Object-specific Keys

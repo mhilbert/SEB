@@ -99,17 +99,20 @@ class Repository
     {
         $keys_windows = [];
         $keys_macos = [];
-        if (($keys = $this->db->fetchAssoc(
+        $force_seb_usage = false;
+        if (($keys_config = $this->db->fetchAssoc(
             $this->db->query(
-                'SELECT seb_key_win, seb_key_macos FROM ui_uihk_seb_keys where ref_id='
+                'SELECT force_seb_usage, seb_key_win, seb_key_macos FROM ui_uihk_seb_keys where ref_id='
                     . $this->db->quote($ref_id, 'integer')
             )
         ))) {
-            $keys_windows = $this->buildSEBKeysFromConfigString($keys['seb_key_win']);
-            $keys_macos = $this->buildSEBKeysFromConfigString($keys['seb_key_macos']);
+            $keys_windows = $this->buildSEBKeysFromConfigString($keys_config['seb_key_win']);
+            $keys_macos = $this->buildSEBKeysFromConfigString($keys_config['seb_key_macos']);
+            $force_seb_usage = $keys_config['force_seb_usage'] === 1;
         }
         return new ObjectSpecificKeys(
             $ref_id,
+            $force_seb_usage,
             $keys_windows,
             $keys_macos
         );

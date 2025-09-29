@@ -27,6 +27,7 @@ declare(strict_types=1);
 namespace kergomard\SEB\Access;
 
 use kergomard\SEB\Config\Configuration;
+use kergomard\SEB\Config\ObjectSpecificKeys;
 
 use ILIAS\Filesystem\Stream\Streams;
 use ILIAS\HTTP\Services as HTTPServices;
@@ -41,8 +42,8 @@ class AccessChecker
     ];
 
     private ?Data $data = null;
-    private ?int $ref_id = null;
 
+    private bool $object_specific_keys_forced = false;
     private bool $current_user_allowed = true;
     private bool $switch_to_seb_skin_needed = false;
     private bool $key_check_possible_or_unavoidable = false;
@@ -58,11 +59,13 @@ class AccessChecker
     }
 
     public function __construct(
-        ?int $ref_id,
+        private readonly ?int $ref_id,
+        private readonly ?ObjectSpecificKeys $object_specific_keys,
         private readonly KeysChecker $keys_checker,
         private readonly \ilCtrl $ctrl,
         private readonly \ilObjUser $user,
         private readonly \ilAuthSession $auth,
+        private readonly \ilAccess $access,
         private readonly \ilRbacReview $rbacreview,
         private readonly Refinery $refinery,
         private readonly HTTPServices $http,
@@ -86,8 +89,8 @@ class AccessChecker
             $this->sebKeyInHeaderPostCookieOrNone(),
             $cookie_key
         );
-        $this->ref_id = $ref_id;
 
+        $this->object_specific_keys_forced = $this->object_specific_keys?->getSebUsageForced() ?? false;
         $this->switch_to_seb_skin_needed = $this->detectSwitchToSEBSkinNeeded();
         $this->current_user_allowed = $this->detectCurrentUserAllowed();
         $this->key_check_possible_or_unavoidable = $this->detectKeyCheckPossibleOrForced();
@@ -170,6 +173,12 @@ class AccessChecker
 
     private function detectCurrentUserAllowed(): bool {
         $role_deny = $this->config->getRoleDeny();
+
+        if ($this->object_specific_keys_forced) {
+            return $this->access->checkAccess('write', '', $this->ref_id)
+                || $this->detectSeb($this->ref_id) === SEBRequestTypes::OBJECT_KEY;
+        }
+
         if ($role_deny === 0
             || $role_deny !== 1 && !$this->rbacreview->isAssigned($this->user->getId(), $role_deny)
             || $this->detectSeb($this->ref_id)->allowsDirectKeyMatch()
@@ -195,8 +204,10 @@ class AccessChecker
 
     private function detectSwitchToSEBSkinNeeded(): bool {
         $role_kiosk = $this->config->getRoleKiosk();
-        if ($role_kiosk === 0
-            || $role_kiosk !== 1 && !$this->rbacreview->isAssigned($this->user->getId(), $role_kiosk)) {
+
+        if (!$this->object_specific_keys_forced
+            && ($role_kiosk === 0
+                || $role_kiosk !== 1 && !$this->rbacreview->isAssigned($this->user->getId(), $role_kiosk))) {
             return false;
         }
         return true;
@@ -227,20 +238,20 @@ class AccessChecker
                 ? $this->data->getCookieUri()
                 : $this->data->getRequestUri();
 
-        if ($this->keys_checker->checkGlobalKey(
-                $exam_key,
-                $uri,
-                $this->isInsecureUnhashedMode()
-            )) {
-            return SEBRequestTypes::GLOBAL_KEY;
-        }
         if ($this->keys_checker->checkObjectKey(
                 $exam_key,
                 $uri,
                 $ref_id,
                 $this->isInsecureUnhashedMode()
             )) {
-            return SEBRequestTypes::OBEJCT_KEY;
+            return SEBRequestTypes::OBJECT_KEY;
+        }
+        if ($this->keys_checker->checkGlobalKey(
+                $exam_key,
+                $uri,
+                $this->isInsecureUnhashedMode()
+            )) {
+            return SEBRequestTypes::GLOBAL_KEY;
         }
         if (!$ref_id && $this->keys_checker->checkKeyAgainstAllObjectKeys(
                 $exam_key,

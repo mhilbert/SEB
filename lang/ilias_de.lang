@@ -21,10 +21,14 @@ exam_id#:#Prüfungsnr.
 forbidden_header#:#Keine Berechtigung!
 forbidden_login#:#Bei ILIAS anmelden
 forbidden_message#:#Sie haben mit diesem Browser keine Berechtigung auf das System zuzugreifen. <br />Bitte kontaktieren Sie den Systemadministrator.
+force_seb_usage#:#SEB-Nutzung erzwingen
+force_seb_usage_info#:#Der Zugriff auf den Test für Konten ohne die Berechtigung Einstellungen zu bearbeiten ist nur mit einem Safe Exam Browser und unter Verwendung eines Objekt-spezifischen Keys (siehe oben) möglich. Die Nutzung des Kiosk-Skins wird erzwungen.
 header_bg_color#:#Hintergrundfarbe der Kopfzeile
 header_bg_color_info#:#Geben Sie einen gültigen Farbcode ein, um die Hintergrundfarbe der Kopfzeile zu ändern. Alle in CSS gültigen Codes werden akzeptiert.
 header_color#:#Inhaltsfarbe der Kopfzeile
 header_color_info#:#Geben Sie einen gültigen Farbcode ein, um die Inhaltsfarbe der Kopfzeile zu ändern. Alle in CSS gültigen Codes werden akzeptiert.
+ilias_root_uri#:#ILIAS Root-URI
+ilias_root_uri_info#:#Diese URI kann angepasst werden, falls die ILIAS-URI (Protokoll/Host/Port) von der Anfrage-URL des SEB abweicht (z.B. in Proxy-Konfigurationen). Der Wert kann gelöscht werden, um ihn auf die URI des ILIAS-Systems zurückzusetzen.
 key_macos#:#Keys für MacOS
 key_macos_info#:#Der Key ist im SEB Config Tool im Reiter 'Exams' zu finden. Achtung: Der Key ist funktioniert nur für die Version des SEB, mit welcher er generiert wurde! Es können mehrere durch Komma getrennte Schlüssel eingetragen werden.
 key_windows#:#Keys für Windows
@@ -52,8 +56,6 @@ show_pax_pic#:#Bilder der Teilnehmer/innen anzeigen
 show_pax_pic_info#:#Wenn diese Option aktiviert ist, wird während des Tests rechts oben ein Foto der Teilnehmerin/des Teilnehmers angezeigt. Bedingt, dass Profilbilder auf der ILIAS-Installation vorhanden sind.
 show_pax_username#:#Benutzernamen der Teilnehmer/innen anzeigen
 show_pax_username_info#:#Wenn diese Option aktiviert ist, wird während des Tests im Kopf der Benutzername der Teilnehmerin/des Teilnehmers angezeigt.
-ilias_root_uri#:#ILIAS Root-URI
-ilias_root_uri_info#:#Diese URI kann angepasst werden, falls die ILIAS-URI (Protokoll/Host/Port) von der Anfrage-URL des SEB abweicht (z.B. in Proxy-Konfigurationen). Der Wert kann gelöscht werden, um ihn auf die URI des ILIAS-Systems zurückzusetzen.
 title_delete_sessions_table#:#Die folgenden Session(s) werden entfernt und die entsprechenden Teilnehmer/innen ausgeloggt.
 title_sessions_table#:#Aktuelle Sessions von Test-Teilnehmer/innen
 title_settings_form#:#Objekt-spezifische Keys

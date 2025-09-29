@@ -34,6 +34,7 @@ class ObjectSpecificKeys
 {
     public function __construct(
         private readonly int $ref_id,
+        private readonly bool $force_seb_usage,
         private readonly array $keys_windows,
         private readonly array $keys_macos
     ) {
@@ -50,20 +51,30 @@ class ObjectSpecificKeys
         \ilSEBPlugin $plugin
     ): array {
         $ff = $ui_factory->input()->field();
+
+        $inputs = [
+            'keys_windows' => $ff->text(
+                $plugin->txt('key_windows'),
+                $plugin->txt('key_windows_info')
+            )->withMaxLength(Configuration::MAX_CONFIG_VALUE_LENGTH)
+            ->withValue(implode(', ', $this->keys_windows)),
+            'keys_macos' => $ff->text(
+                $plugin->txt('key_macos'),
+                $plugin->txt('key_macos_info')
+            )->withMaxLength(Configuration::MAX_CONFIG_VALUE_LENGTH)
+            ->withValue(implode(', ', $this->keys_macos)),
+        ];
+
+        if ($plugin->getConfiguration()->getObjectKeysEnabled()) {
+            $inputs['force_seb_usage'] = $ff->checkbox(
+                $plugin->txt('force_seb_usage'),
+                $plugin->txt('force_seb_usage_info'),
+            )->withValue($this->force_seb_usage);
+        }
+
         return [
             'container' => $ff->section(
-                [
-                    'keys_windows' => $ff->text(
-                        $plugin->txt('key_windows'),
-                        $plugin->txt('key_windows_info')
-                    )->withMaxLength(Configuration::MAX_CONFIG_VALUE_LENGTH)
-                    ->withValue(implode(', ', $this->keys_windows)),
-                    'keys_macos' => $ff->text(
-                        $plugin->txt('key_macos'),
-                        $plugin->txt('key_macos_info')
-                    )->withMaxLength(Configuration::MAX_CONFIG_VALUE_LENGTH)
-                    ->withValue(implode(', ', $this->keys_macos)),
-                ],
+                $inputs,
                 $plugin->txt('title_settings_form'),
                 $plugin->txt('description_settings_form')
             )->withAdditionalTransformation(
@@ -77,11 +88,17 @@ class ObjectSpecificKeys
         return $this->ref_id;
     }
 
+    public function getSebUsageForced(): bool
+    {
+        return $this->force_seb_usage;
+    }
+
     public function toStorage(): array
     {
         return [
             'seb_key_win' => [\ilDBConstants::T_TEXT, implode(',', $this->keys_windows)],
-            'seb_key_macos' => [\ilDBConstants::T_TEXT, implode(',', $this->keys_macos)]
+            'seb_key_macos' => [\ilDBConstants::T_TEXT, implode(',', $this->keys_macos)],
+            'force_seb_usage' => [\ilDBConstants::T_INTEGER, $this->force_seb_usage ? 1 : 0]
         ];
     }
 
@@ -90,6 +107,7 @@ class ObjectSpecificKeys
         return $refinery->custom()->transformation(
             fn (array $vs): self => new self(
                 $this->ref_id,
+                $vs['force_seb_usage'] ?? false,
                 $this->buildSEBKeysFromConfigString($vs['keys_windows']),
                 $this->buildSEBKeysFromConfigString($vs['keys_macos'])
             )

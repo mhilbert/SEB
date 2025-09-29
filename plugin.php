@@ -25,7 +25,7 @@
  */
 
 $id = 'seb';
-$version = '2.7.0';
+$version = '2.8.0';
 $ilias_min_version = '9.0';
 $ilias_max_version = '9.99';
 $responsible = 'Stephan Kergomard';

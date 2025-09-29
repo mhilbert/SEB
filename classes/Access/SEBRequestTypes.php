@@ -31,12 +31,12 @@ enum SEBRequestTypes {
     case NOT_A_SEB_REQUEST;
     case OBJECT_KEY_UNSPECIFIC;
     case GLOBAL_KEY;
-    case OBEJCT_KEY;
+    case OBJECT_KEY;
 
     public function allowsDirectKeyMatch(): bool
     {
         return match($this) {
-            self::GLOBAL_KEY, self::OBEJCT_KEY => true,
+            self::GLOBAL_KEY, self::OBJECT_KEY => true,
             default => false
         };
     }
