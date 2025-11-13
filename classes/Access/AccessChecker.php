@@ -205,7 +205,7 @@ class AccessChecker
     private function detectSwitchToSEBSkinNeeded(): bool {
         $role_kiosk = $this->config->getRoleKiosk();
 
-        if (!$this->object_specific_keys_forced
+        if ((!$this->object_specific_keys_forced || $this->access->checkAccess('write', '', $this->ref_id))
             && ($role_kiosk === 0
                 || $role_kiosk !== 1 && !$this->rbacreview->isAssigned($this->user->getId(), $role_kiosk))) {
             return false;
