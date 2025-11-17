@@ -40,6 +40,7 @@ use ILIAS\GlobalScreen\Scope\Layout\Provider\AbstractModificationPluginProvider;
 use ILIAS\GlobalScreen\Scope\Layout\Provider\PagePart\PagePartProvider;
 use ILIAS\GlobalScreen\ScreenContext\Stack\CalledContexts;
 use ILIAS\GlobalScreen\ScreenContext\Stack\ContextCollection;
+use ILIAS\UI\Factory as UIFactory;
 use ILIAS\UI\Component\Breadcrumbs\Breadcrumbs;
 use ILIAS\UI\Component\Button\Bulky as BulkyButton;
 use ILIAS\UI\Component\Image\Image;
@@ -48,6 +49,8 @@ use ILIAS\UI\Component\MainControls\Footer;
 use ILIAS\UI\Component\MainControls\MainBar;
 use ILIAS\UI\Component\MainControls\MetaBar;
 use ILIAS\UI\Component\MainControls\Slate\Combined as CombinedSlate;
+use ILIAS\UI\Implementation\Component\MainControls\Slate\Legacy as LegacySlate;
+use ILIAS\UI\Component\Listing\Workflow\Workflow;
 
 class SEBModificationProvider extends AbstractModificationPluginProvider
 {
@@ -89,15 +92,46 @@ SCRIPT;
         if (!$this->plugin->getEnableSEBSkin()) {
             return null;
         }
+
         return $this->dic->globalScreen()->layout()->factory()->mainbar()->withModification(
-            function (MainBar $current = null): ?MainBar {
-                $this->addCSS();
+            function (MainBar $current = null) use ($screen_context_stack): ?MainBar {
+                $question_list_enabled = $screen_context_stack
+                    ->current()
+                    ->getAdditionalData()
+                    ->exists(\ilTestPlayerLayoutProvider::TEST_PLAYER_QUESTIONLIST);
+                $this->addCSS($question_list_enabled);
                 if ($this->isTestRunning()) {
                     $this->dic->globalScreen()->layout()->meta()->addOnloadCode(
                         'il.seb.sebClockInit(document.querySelector("#kioskClock"))'
                     );
                 }
-                return $this->dic->ui()->factory()->mainControls()->mainBar();
+
+                if ($current === null
+                    || !$question_list_enabled) {
+                    return $current?->withClearedEntries();
+                }
+
+                $ui_factory = $this->dic->ui()->factory();
+                $lng = $this->dic['lng'];
+
+                return $current
+                    ->withClearedEntries()
+                    ->withToolsButton(
+                        $ui_factory->button()->bulky(
+                            $ui_factory->symbol()->icon()->standard('tst', $lng->txt('more')),
+                            $lng->txt('tools'),
+                            ''
+                        )->withEngagedState(true)
+                    )->withAdditionalToolEntry(
+                        'questionlist',
+                        $this->buildQuestionSlate(
+                            $ui_factory,
+                            $lng->txt('mainbar_button_label_questionlist'),
+                            $screen_context_stack->current()->getAdditionalData()->get(
+                                \ilTestPlayerLayoutProvider::TEST_PLAYER_QUESTIONLIST
+                            )
+                        )
+                    );
             }
         )->withPriority(LayoutModification::PRIORITY_HIGH - 1);
     }
@@ -345,7 +379,7 @@ SCRIPT;
         )->__toString();
     }
 
-    private function addCSS(): void
+    private function addCSS(bool $has_question_list): void
     {
         $this->dic->ui()->mainTemplate()->addCss($this->plugin->getStyleSheetLocation('default/seb.css'));
 
@@ -353,8 +387,28 @@ SCRIPT;
             $this->dic->ui()->mainTemplate()->addCss($this->plugin->getStyleSheetLocation('default/seb_with_profile_picture.css'));
         }
 
+        if (!$has_question_list) {
+            $this->dic->ui()->mainTemplate()->addCss($this->plugin->getStyleSheetLocation('default/seb_hide_main_bar.css'));
+        }
+
         if ($this->isTestRunning()) {
             $this->dic->ui()->mainTemplate()->addCss($this->plugin->getStyleSheetLocation('default/seb_test_running.css'));
         }
+    }
+
+    private function buildQuestionSlate(
+        UIFactory $ui_factory,
+        string $label,
+        Workflow $question_list
+    ): LegacySlate {
+        return $ui_factory->maincontrols()->slate()->legacy(
+            $label,
+            $ui_factory->symbol()->icon()->standard('tst', $label),
+            $ui_factory->legacy(
+                $this->dic->ui()->renderer()->render(
+                    $question_list
+                )
+            )
+        );
     }
 }

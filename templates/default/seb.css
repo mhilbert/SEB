@@ -1,6 +1,6 @@
 /* Hide unused sections, where removal through the hooks creates too much overhead */
 /* hide StartupSection */
-p.ilStartupSection, .ilHeadAction, .breadcrumbs, .nav.il-maincontrols,
+p.ilStartupSection, .ilHeadAction, .breadcrumbs,
 .osdNotificationContainer, .ilInfoScreenSec .il_InfoScreenPropertyValue a[href="#"] {
 	display: none;
 }
@@ -50,12 +50,6 @@ p.ilStartupSection, .ilHeadAction, .breadcrumbs, .nav.il-maincontrols,
   grid-template-rows: auto 40px 1fr;
 }
 
-.il-layout-page.with-mainbar-slates-engaged .nav.il-maincontrols .il-maincontrols-mainbar {
-  -ms-grid-rows: 1fr 40px;
-  grid-template-rows: 1fr 40px;
-  grid-template-rows: 1fr calc(40px + 1.2 * env(safe-area-inset-bottom));
-}
-
 .il-logo {
 	align-items: initial;
 }
@@ -63,11 +57,6 @@ p.ilStartupSection, .ilHeadAction, .breadcrumbs, .nav.il-maincontrols,
 .il-logo,
 .il-logo .img-standard {
   width: 40px;
-}
-
-.il-mainbar {
-  max-height: 40px;
-  max-height: calc(40px + 1.2 * env(safe-area-inset-bottom));
 }
 
 .il-layout-page-content {
@@ -85,13 +74,7 @@ p.ilStartupSection, .ilHeadAction, .breadcrumbs, .nav.il-maincontrols,
 
 .header-inner,
 .il-maincontrols-metabar > li > .btn-bulky,
-.il-maincontrols-metabar > li > .link-bulky,
-.il-mainbar-tools-button button,
-.il-mainbar-tools-entries .il-mainbar-tools-entries-bg,
-.il-mainbar-triggers .btn-bulky,
-.il-mainbar-triggers .il-link.link-bulky,
-.il-mainbar-tools-entries.engaged,
-.il-mainbar-tools-entries.engaged .il-mainbar-remove-tool .close {
+.il-maincontrols-metabar > li > .link-bulky {
   height: 40px;
 }
 
