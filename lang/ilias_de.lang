@@ -30,9 +30,9 @@ header_color_info#:#Geben Sie einen gültigen Farbcode ein, um die Inhaltsfarbe 
 ilias_root_uri#:#ILIAS Root-URI
 ilias_root_uri_info#:#Diese URI kann angepasst werden, falls die ILIAS-URI (Protokoll/Host/Port) von der Anfrage-URL des SEB abweicht (z.B. in Proxy-Konfigurationen). Der Wert kann gelöscht werden, um ihn auf die URI des ILIAS-Systems zurückzusetzen.
 key_macos#:#Keys für MacOS
-key_macos_info#:#Der Key ist im SEB Config Tool im Reiter 'Exams' zu finden. Achtung: Der Key ist funktioniert nur für die Version des SEB, mit welcher er generiert wurde! Es können mehrere durch Komma getrennte Schlüssel eingetragen werden.
+key_macos_info#:#Der Key ist im SEB Config Tool im Reiter 'Exams' zu finden. Achtung: Der Key funktioniert nur für die Version des SEB, mit welcher er generiert wurde! Es können mehrere durch Komma getrennte Schlüssel eingetragen werden.
 key_windows#:#Keys für Windows
-key_windows_info#:#Der Key ist im SEB Config Tool im Reiter 'Exams' zu finden. Achtung: Der Key ist funktioniert nur für die Version des SEB, mit welcher er generiert wurde! Es können mehrere durch Komma getrennte Schlüssel eingetragen werden.
+key_windows_info#:#Der Key ist im SEB Config Tool im Reiter 'Exams' zu finden. Achtung: Der Key funktioniert nur für die Version des SEB, mit welcher er generiert wurde! Es können mehrere durch Komma getrennte Schlüssel eingetragen werden.
 no_sessions_selected#:#Sie müssen mindestens eine Session auswählen, um diese zu entfernen.
 nothing_changed#:#Keine Änderungen
 req_header#:#Request Header

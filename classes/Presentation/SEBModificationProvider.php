@@ -77,6 +77,10 @@ SCRIPT;
     public function getPageBuilderDecorator(
         CalledContexts $screen_context_stack
     ): ?PageBuilderModification {
+        if (!$this->plugin->getEnableSEBSkin()) {
+            return null;
+        }
+
         return $this->factory->page()->withModification(
             function (PagePartProvider $parts): Page {
                 $p = new StandardPageBuilder();
