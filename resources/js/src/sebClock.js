@@ -31,7 +31,7 @@ const updateInterval = 500;
  */
 function setTime(clockElementParam) {
   const clockElement = clockElementParam;
-  clockElement.innerHTML = `${(new Date()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  clockElement.innerHTML = `${(new Date()).toLocaleTimeString([document.documentElement.lang, 'en'], { hour: '2-digit', minute: '2-digit' })}`;
 }
 
 /**
