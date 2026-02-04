@@ -24,4 +24,35 @@ div.il_HeaderInner {
 	margin:				-4px 1px -3px 17px; 
 	font-size:			small;
 	font-weight:		normal;
-}	
+}
+
+.il-maincontrols-slate-content li.il-workflow-step {
+	margin-bottom:		-30px;
+}
+
+.il-workflow-container .available .il-workflow-step-label .btn.btn-link {
+	color:				#4c6586;
+	font-size:			0.75rem;
+	vertical-align:		super;
+}
+
+.il-workflow-container .active .text .il-workflow-step-label .btn.btn-link {
+	color:				#161616;
+	font-size:			0.75rem;
+	font-weight:		600;
+	vertical-align:		super;
+}
+
+.il-workflow-container .available::before {
+	height:				12px;
+	width:				12px;
+	line-height:		12px;
+	margin-left:		9px;
+}
+
+.il-workflow-container .active::before {
+	height:				16px;
+	width:				16px;
+	line-height:		16px;
+	margin-left:		7.5px;
+}
