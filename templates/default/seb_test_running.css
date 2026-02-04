@@ -5,3 +5,11 @@
 .il-logo {
 	margin-right: 1.5rem;
 }
+
+#headerimage, h1.ilHeader {
+	display: none;
+}
+
+div.il_HeaderInner {
+	padding-top: 0px;
+}
