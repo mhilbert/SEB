@@ -42,15 +42,7 @@ p.ilStartupSection, .ilHeadAction, .breadcrumbs,
 }
 
 #kioskClock {
-	border-style:		none;
-	-moz-box-shadow:	inset 1px 1px 4px 0px #697783;
-	-webkit-box-shadow:	inset 1px 1px 4px 0px #697783;
-	box-shadow:			inset 1px 1px 4px 0px #697783;
-	background-color:	#8ec05c;
-	padding:			4px 5px 3px 6px;
-	margin:				-4px 1px -3px 17px; 
-	font-size:			small;
-	font-weight:		normal;
+	padding: 0 2em;
 }
 
 /* Adaptations Needed to Reduce Header Size */
