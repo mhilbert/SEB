@@ -64,3 +64,8 @@ div.ilc_question_Standard img {
 div.ilc_question_Standard img.imagemap {
 	pointer-events: auto;
 }
+
+div.caption a.ilc_qimgd_ImageDetailsLink,
+div.ilc_qimgd_ImageDetailsLink {
+        display:        none;
+}
