@@ -262,9 +262,9 @@ class ilSEBPlugin extends ilUserInterfaceHookPlugin
         return null;
     }
 
-    private function extractRefIdFromTargetParameter(int|string $target): ?int
+    private function extractRefIdFromTargetParameter(int|string|null $target): ?int
     {
-        if (is_int($target)) {
+        if ($target === null || is_int($target)) {
             return $target;
         }
         $target_array = explode('_', $target);
