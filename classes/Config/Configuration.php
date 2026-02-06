@@ -39,7 +39,7 @@ class Configuration
      * provided by the SEB and this plugin drastically. If you are sure you
      * know what you are doing, change the value to `true` to enable it.
      */
-    private const ENABLE_INSECURE_USER_AGENT_KEY = false;
+    private const ENABLE_INSECURE_USER_AGENT_KEY = true;
 
     public const MAX_CONFIG_VALUE_LENGTH = 2000;
     private const CMDS_WITHOUT_SEB_KEY_TAB = [
