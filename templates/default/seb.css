@@ -115,6 +115,11 @@ div.sebForbiddenLogin {
 	margin-top: 20pt;
 }
 
+/* Hide Info Alert over Launcher */
+.alert-info {
+	display: none;
+}
+
 /* Hide Print Button in Test Results View */
 #tst_results_toolbar {
 	display: none;
